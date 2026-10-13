@@ -1,9 +1,6 @@
 <?php
 
-
 session_start();
-require_once __DIR__ . '/../bdd/Bdd.php';
-require_once __DIR__ . '/../modele/Utilisateur.php';
 require_once __DIR__ . '/../repository/UtilisateurRepository.php';
 
 $erreur = '';
@@ -18,31 +15,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $repo = new UtilisateurRepository();
         $user = $repo->getUtilisateurByEmail($email);
 
-        if (!$user || !password_verify($mdp, $user->getMotDePasse())) {
+        if (!$user || !password_verify($mdp, $user->getMdpUtilisateur())) {
             $erreur = 'Email ou mot de passe incorrect.';
-        } elseif (!$user->isActif()) {
-            $erreur = 'Votre compte est bloqué. Veuillez contacter l\'accueil.';
+        } elseif ($user->getStatusValidation() === 'En attente') {
+            $erreur = 'Votre inscription est en attente de validation par un gestionnaire.';
+        } elseif ($user->getStatusValidation() !== 'Validé') {
+            $erreur = 'Votre inscription a été refusée.';
         } else {
             $_SESSION['user_id'] = $user->getIdUtilisateur();
-            $_SESSION['user_nom'] = $user->getNomComplet();
-            $_SESSION['user_role'] = $user->getRole();
-            $_SESSION['user_email'] = $user->getEmail();
+            $_SESSION['user_nom'] = $user->getPrenomUtilisateur() . ' ' . $user->getNomUtilisateur();
+            $_SESSION['user_role'] = $user->getTypeProfil();
+            $_SESSION['user_email'] = $user->getEmailUtilisateur();
 
-            switch ($user->getRole()) {
-                case 'administrateur':
-                    header('Location: ../../index.php?page=admin');
-                    break;
-                case 'accueil':
-                    header('Location: ../../index.php?page=accueil');
-                    break;
-                default:
-                    header('Location: ../../index.php?page=client');
+            if ($user->getTypeProfil() === 'gestionnaire') {
+                header('Location: ../admin/dashboard.php');
+            } else {
+                header('Location: ../../index.php?page=profil');
             }
             exit;
         }
     }
 }
 
-$_SESSION['login_erreur'] = $erreur;
 header('Location: ../../index.php?page=login&erreur=' . urlencode($erreur));
 exit;
