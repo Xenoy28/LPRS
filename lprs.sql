@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mar. 15 sep. 2026 à 10:24
+-- Généré le : mar. 13 oct. 2026 à 09:57
 -- Version du serveur : 9.1.0
 -- Version de PHP : 8.3.14
 
@@ -64,7 +64,16 @@ CREATE TABLE IF NOT EXISTS `canal_forum` (
   `description` text,
   `type_acces` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id_canal`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `canal_forum`
+--
+
+INSERT INTO `canal_forum` (`id_canal`, `nom`, `description`, `type_acces`) VALUES
+(1, 'Général', 'Discussions ouvertes à tous.', 'tous'),
+(2, 'Élèves', 'Espace d\'échange entre élèves.', 'etudiant'),
+(3, 'Professeurs', 'Espace d\'échange entre professeurs.', 'professeur');
 
 -- --------------------------------------------------------
 
@@ -173,6 +182,13 @@ CREATE TABLE IF NOT EXISTS `gestionnaire` (
   PRIMARY KEY (`id_utilisateur`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Déchargement des données de la table `gestionnaire`
+--
+
+INSERT INTO `gestionnaire` (`id_utilisateur`, `role`) VALUES
+(1, 'Gestionnaire');
+
 -- --------------------------------------------------------
 
 --
@@ -189,6 +205,24 @@ CREATE TABLE IF NOT EXISTS `inscription_evenement` (
   PRIMARY KEY (`id_inscription`),
   KEY `id_utilisateur` (`id_utilisateur`),
   KEY `id_evenement` (`id_evenement`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `messages`
+--
+
+DROP TABLE IF EXISTS `messages`;
+CREATE TABLE IF NOT EXISTS `messages` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `sujet_id` int NOT NULL,
+  `auteur_id` int NOT NULL,
+  `contenu` text NOT NULL,
+  `date_creation` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `sujet_id` (`sujet_id`),
+  KEY `auteur_id` (`auteur_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -278,6 +312,13 @@ CREATE TABLE IF NOT EXISTS `professeur` (
   PRIMARY KEY (`id_utilisateur`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Déchargement des données de la table `professeur`
+--
+
+INSERT INTO `professeur` (`id_utilisateur`, `specialite`, `grade`) VALUES
+(2, 'Mathématiques', NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -299,6 +340,23 @@ CREATE TABLE IF NOT EXISTS `reponse` (
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `sujets`
+--
+
+DROP TABLE IF EXISTS `sujets`;
+CREATE TABLE IF NOT EXISTS `sujets` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `section` enum('general','eleves','professeurs') NOT NULL,
+  `titre` varchar(150) NOT NULL,
+  `auteur_id` int NOT NULL,
+  `date_creation` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `auteur_id` (`auteur_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `utilisateur`
 --
 
@@ -313,7 +371,15 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
   `statut_validation` varchar(30) DEFAULT 'En attente',
   PRIMARY KEY (`id_utilisateur`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `utilisateur`
+--
+
+INSERT INTO `utilisateur` (`id_utilisateur`, `nom`, `prenom`, `email`, `mot_de_passe`, `type_profil`, `statut_validation`) VALUES
+(1, 'Admin', 'Root', 'admin@lprs.fr', '$2y$10$wMNt6QMXfjFWs21Fpxv96uYEzbJOp7VirbPsJq5gY4WXW33iy0eoW', 'gestionnaire', 'Validé'),
+(2, 'Martin', 'Paul', 'prof@lprs.fr', '$2y$10$lFRA7UkGGB.SG1OeChHwxO6Z0JMTObZw.6LzGFX9F6DmSC3Uo6h/C', 'professeur', 'Validé');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
