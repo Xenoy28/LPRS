@@ -1,107 +1,111 @@
 <?php
 
 class Utilisateur {
-    private PDO $connexionBdd;
-    private ?int $idUtilisateur = null;
-    private ?string $nomUtilisateur = null;
-    private ?string $prenomUtilisateur = null;
-    private ?string $emailUtilisateur = null;
-    private ?string $mdpUtilisateur = null;
-    private ?string $type_profil = null;
-    private ?string $statut_validation = null;
+    private $idUtilisateur;
+    private $nomUtilisateur;
+    private $prenomUtilisateur;
+    private $emailUtilisateur;
+    private $mdpUtilisateur;
+    private $type_profil;
+    private $status_validation;
+    private $details; // champs propres au profil (promotion, cv, poste, ...)
 
-    public function __construct(PDO $connexionBdd){
-        $this->connexionBdd = $connexionBdd;
+    public function __construct($idUtilisateur = null, $nom = null, $prenom = null, $email = null, $mdp = null,
+                                $type_profil = null, $status_validation = 'En attente', $details = []){
+        $this->idUtilisateur = $idUtilisateur;
+        $this->nomUtilisateur = $nom;
+        $this->prenomUtilisateur = $prenom;
+        $this->emailUtilisateur = $email;
+        $this->mdpUtilisateur = $mdp;
+        $this->type_profil = $type_profil;
+        $this->status_validation = $status_validation;
+        $this->details = $details;
     }
-
-    public function getIdUtilisateur(): ?int
-    {
+    public function getIdUtilisateur(){
         return $this->idUtilisateur;
     }
-
-    public function setIdUtilisateur(int $idUtilisateur): void
-    {
+    public function setIdUtilisateur($idUtilisateur){
         $this->idUtilisateur = $idUtilisateur;
     }
 
-    public function getConnexionBdd(): PDO
-    {
-        return $this->connexionBdd;
-    }
-
-    public function setConnexionBdd(PDO $connexionBdd): void
-    {
-        $this->connexionBdd = $connexionBdd;
-    }
-
-    public function getNomUtilisateur(): ?string
+    public function getNomUtilisateur()
     {
         return $this->nomUtilisateur;
     }
 
-    public function setNomUtilisateur(string $nomUtilisateur): void
+    public function setNomUtilisateur($nomUtilisateur): void
     {
         $this->nomUtilisateur = $nomUtilisateur;
     }
 
 
-    public function getPrenomUtilisateur(): ?string
+    public function getPrenomUtilisateur()
     {
         return $this->prenomUtilisateur;
     }
 
 
-    public function setPrenomUtilisateur(string $prenomUtilisateur): void
+    public function setPrenomUtilisateur($prenomUtilisateur): void
     {
         $this->prenomUtilisateur = $prenomUtilisateur;
     }
 
 
-    public function getEmailUtilisateur(): ?string
+    public function getEmailUtilisateur()
     {
         return $this->emailUtilisateur;
     }
 
 
-    public function setEmailUtilisateur(string $emailUtilisateur): void
+    public function setEmailUtilisateur($emailUtilisateur): void
     {
         $this->emailUtilisateur = $emailUtilisateur;
     }
 
 
-    public function getMdpUtilisateur(): ?string
+    public function getMdpUtilisateur()
     {
         return $this->mdpUtilisateur;
     }
 
 
-    public function setMdpUtilisateur(string $mdpUtilisateur): void
+    public function setMdpUtilisateur($mdpUtilisateur): void
     {
         $this->mdpUtilisateur = $mdpUtilisateur;
     }
 
 
-    public function getTypeProfil(): ?string
+    public function getTypeProfil()
     {
         return $this->type_profil;
     }
 
 
-    public function setTypeProfil(string $type_profil): void
+    public function setTypeProfil($type_profil): void
     {
         $this->type_profil = $type_profil;
     }
 
 
-    public function getStatutValidation(): ?string
+    public function getStatusValidation()
     {
-        return $this->statut_validation;
+        return $this->status_validation;
     }
 
 
-    public function setStatutValidation(string $statut_validation): void
+    public function setStatusValidation($status_validation): void
     {
-        $this->statut_validation = $statut_validation;
+        $this->status_validation = $status_validation;
+    }
+
+    public function getDetails()
+    {
+        return $this->details;
+    }
+
+    public function setDetails($details): void
+    {
+        $this->details = $details;
     }
 
 }
