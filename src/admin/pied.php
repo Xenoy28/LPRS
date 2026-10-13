@@ -1,8 +1,3 @@
-<?php
-
-namespace admin;
-
-class pied
-{
-
-}
+</main>
+</body>
+</html>
