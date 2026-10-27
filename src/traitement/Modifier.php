@@ -10,6 +10,10 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST' || empty($_SESSION['user_id'])) {
 
 $repo = new UtilisateurRepository();
 $user = $repo->getById($_SESSION['user_id']);
+if (!$user) { // compte supprimé : on déconnecte
+    header('Location: Logout.php');
+    exit;
+}
 
 $nom = trim($_POST['nom'] ?? '');
 $prenom = trim($_POST['prenom'] ?? '');
