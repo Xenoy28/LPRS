@@ -382,6 +382,43 @@ INSERT INTO `utilisateur` (`id_utilisateur`, `nom`, `prenom`, `email`, `mot_de_p
 (2, 'Martin', 'Paul', 'prof@lprs.fr', '$2y$10$lFRA7UkGGB.SG1OeChHwxO6Z0JMTObZw.6LzGFX9F6DmSC3Uo6h/C', 'professeur', 'Validé');
 COMMIT;
 
+INSERT INTO `formation` (`nom_formation`, `niveau`, `type_formation`) VALUES
+('Bac professionnel TRPM', 'Bac', 'Professionnel'),
+('Bac professionnel MSPC', 'Bac', 'Professionnel'),
+('Bac professionnel CIEL', 'Bac', 'Professionnel'),
+('Bac technologique STI2D', 'Bac', 'Technologique'),
+('BTS CPRP', 'BTS', 'BTS'),
+('BTS MSPC', 'BTS', 'BTS'),
+('BTS SIO', 'BTS', 'BTS');
+
+-- Offre : ouverte à tous ou à un profil particulier ('tous', 'etudiant', 'alumni')
+ALTER TABLE `offre` ADD COLUMN `profil_cible` varchar(30) NOT NULL DEFAULT 'tous';
+
+-- Professeur : formation(s) dans lesquelles il intervient
+CREATE TABLE IF NOT EXISTS `professeur_formation` (
+    `id_utilisateur` int NOT NULL,
+    `id_formation` int NOT NULL,
+    PRIMARY KEY (`id_utilisateur`, `id_formation`)
+    ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+
+-- Mot de passe oublié : jeton à usage unique (stocké hashé), valable 1 heure
+CREATE TABLE IF NOT EXISTS `reinitialisation_mdp` (
+    `id_utilisateur` int NOT NULL,
+    `jeton_hash` char(64) NOT NULL,
+    `expiration` datetime NOT NULL,
+    PRIMARY KEY (`id_utilisateur`)
+    ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+
+-- Formulaire de contact
+CREATE TABLE IF NOT EXISTS `message_contact` (
+    `id_message` int NOT NULL AUTO_INCREMENT,
+    `nom` varchar(150) NOT NULL,
+    `email` varchar(150) NOT NULL,
+    `sujet` varchar(200) NOT NULL,
+    `message` text NOT NULL,
+    `date_envoi` datetime DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id_message`)
+    ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
