@@ -49,8 +49,9 @@ $connecte = !empty($_SESSION['user_id']);
             <a href="index.php?page=offres">Offres</a>
             <a href="index.php?page=evenements">Événements</a>
             <a href="index.php?page=annuaire">Annuaire</a>
+            <a href="src/vue/Forum.php">Forum</a>
         <?php endif; ?>
-        <a href="src/traitement/Forum.php">Forum</a>
+
     </div>
 
     <div class="droite">

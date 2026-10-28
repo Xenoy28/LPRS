@@ -128,7 +128,6 @@ if ($page === 'accueil') {
         <button class="burger" onclick="toggleMenu()">☰</button>
         <ul class="menu" id="menu">
             <li><a href="#">Profil</a></li>
-            <li><a href="Login.php">Se connecter</a></li>
             <li><a href="../traitement/Logout.php">Déconnexion</a></li>
             <li><a href="#">Paramètres</a></li>
         </ul>
