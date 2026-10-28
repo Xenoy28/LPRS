@@ -41,7 +41,7 @@
     <div class="centre">
         <a href="#">Accueil</a>
         <a href="#">Services</a>
-        <a href="src/traitement/Forum.php">Forum</a>
+        <a href="Forum.php">Forum</a>
     </div>
 
     <div class="droite">
