@@ -54,6 +54,10 @@ $formations = (new UtilisateurRepository())->listeFormations();
 
     <fieldset class="profil" data-role="professeur">
         <p>Spécialité / matière <input type="text" name="specialite"></p>
+        <p>Formation(s) où j'interviens :</p>
+        <?php foreach ($formations as $f): ?>
+            <label><input type="checkbox" name="formations[]" value="<?= $f['id_formation'] ?>"> <?= htmlspecialchars($f['nom_formation']) ?></label><br>
+        <?php endforeach; ?>
     </fieldset>
 
     <p><button type="submit">S'inscrire</button></p>

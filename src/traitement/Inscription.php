@@ -2,6 +2,7 @@
 
 session_start();
 require_once __DIR__ . '/../repository/UtilisateurRepository.php';
+require_once __DIR__ . '/../repository/FormationRepository.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: ../../index.php?page=inscription');
@@ -16,6 +17,7 @@ $mdpConfirm = $_POST['mot_de_passe_confirm'] ?? '';
 $role = trim($_POST['role'] ?? '');
 $erreur = '';
 $details = [];
+$formationsChoisies = [];
 
 if (empty($nom) || empty($prenom) || empty($email) || empty($mdp) || empty($role)) {
     $erreur = 'Tous les champs obligatoires doivent être remplis.';
@@ -35,6 +37,13 @@ if (empty($nom) || empty($prenom) || empty($email) || empty($mdp) || empty($role
             $erreur = 'Tous les champs obligatoires doivent être remplis.';
         }
     }
+    // un professeur indique la ou les formations où il intervient
+    if ($role === 'professeur') {
+        $formationsChoisies = array_map('intval', (array)($_POST['formations'] ?? []));
+        if (!$formationsChoisies) {
+            $erreur = 'Choisissez au moins une formation.';
+        }
+    }
 }
 
 if ($erreur === '') {
@@ -45,7 +54,10 @@ if ($erreur === '') {
         // compte "En attente" : un gestionnaire doit le valider avant la connexion
         $user = new Utilisateur(null, $nom, $prenom, $email, password_hash($mdp, PASSWORD_DEFAULT),
             $role, 'En attente', $details);
-        $repo->inscrire($user);
+        $id = $repo->inscrire($user);
+        if ($role === 'professeur') {
+            (new FormationRepository())->definirPourProfesseur($id, $formationsChoisies);
+        }
         header('Location: ../../index.php?page=login&succes=' . urlencode('Inscription enregistrée, en attente de validation par un gestionnaire.'));
         exit;
     }

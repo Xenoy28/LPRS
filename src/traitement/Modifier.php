@@ -2,6 +2,7 @@
 
 session_start();
 require_once __DIR__ . '/../repository/UtilisateurRepository.php';
+require_once __DIR__ . '/../repository/FormationRepository.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST' || empty($_SESSION['user_id'])) {
     header('Location: ../../index.php?page=login');
@@ -21,6 +22,7 @@ $email = trim($_POST['email'] ?? '');
 $nouveauMdp = $_POST['nouveau_mot_de_passe'] ?? '';
 $erreur = '';
 $details = $user->getDetails();
+$formationsChoisies = [];
 
 if (empty($nom) || empty($prenom) || empty($email)) {
     $erreur = 'Le nom, le prénom et l\'email sont obligatoires.';
@@ -37,6 +39,12 @@ if (empty($nom) || empty($prenom) || empty($email)) {
             $erreur = 'Tous les champs obligatoires doivent être remplis.';
         }
     }
+    if ($user->getTypeProfil() === 'professeur') {
+        $formationsChoisies = array_map('intval', (array)($_POST['formations'] ?? []));
+        if (!$formationsChoisies) {
+            $erreur = 'Choisissez au moins une formation.';
+        }
+    }
 }
 
 if ($erreur === '') {
@@ -48,6 +56,9 @@ if ($erreur === '') {
     }
     $user->setDetails($details);
     $repo->modifier($user);
+    if ($user->getTypeProfil() === 'professeur') {
+        (new FormationRepository())->definirPourProfesseur($user->getIdUtilisateur(), $formationsChoisies);
+    }
     $_SESSION['user_nom'] = $prenom . ' ' . $nom;
     header('Location: ../../index.php?page=profil&succes=' . urlencode('Profil mis à jour.'));
     exit;
