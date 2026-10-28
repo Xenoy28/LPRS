@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mar. 13 oct. 2026 à 09:57
+-- Généré le : mer. 28 oct. 2026 à 10:28
 -- Version du serveur : 9.1.0
 -- Version de PHP : 8.3.14
 
@@ -29,12 +29,12 @@ SET time_zone = "+00:00";
 
 DROP TABLE IF EXISTS `alumni`;
 CREATE TABLE IF NOT EXISTS `alumni` (
-  `id_utilisateur` int NOT NULL,
-  `promotion` varchar(50) DEFAULT NULL,
-  `cv` varchar(255) DEFAULT NULL,
-  `situation_professionnelle` varchar(150) DEFAULT NULL,
-  PRIMARY KEY (`id_utilisateur`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+                                        `id_utilisateur` int NOT NULL,
+                                        `promotion` varchar(50) DEFAULT NULL,
+    `cv` varchar(255) DEFAULT NULL,
+    `situation_professionnelle` varchar(150) DEFAULT NULL,
+    PRIMARY KEY (`id_utilisateur`)
+    ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -44,12 +44,12 @@ CREATE TABLE IF NOT EXISTS `alumni` (
 
 DROP TABLE IF EXISTS `appartient_entreprise`;
 CREATE TABLE IF NOT EXISTS `appartient_entreprise` (
-  `id_utilisateur` int NOT NULL,
-  `id_entreprise` int NOT NULL,
-  `poste` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`id_utilisateur`,`id_entreprise`),
-  KEY `id_entreprise` (`id_entreprise`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+                                                       `id_utilisateur` int NOT NULL,
+                                                       `id_entreprise` int NOT NULL,
+                                                       `poste` varchar(100) DEFAULT NULL,
+    PRIMARY KEY (`id_utilisateur`,`id_entreprise`),
+    KEY `id_entreprise` (`id_entreprise`)
+    ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -59,21 +59,22 @@ CREATE TABLE IF NOT EXISTS `appartient_entreprise` (
 
 DROP TABLE IF EXISTS `canal_forum`;
 CREATE TABLE IF NOT EXISTS `canal_forum` (
-  `id_canal` int NOT NULL AUTO_INCREMENT,
-  `nom` varchar(100) NOT NULL,
-  `description` text,
-  `type_acces` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`id_canal`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+                                             `id_canal` int NOT NULL AUTO_INCREMENT,
+                                             `nom` varchar(100) NOT NULL,
+    `description` text,
+    `type_acces` varchar(50) DEFAULT NULL,
+    `roles_createurs` varchar(100) DEFAULT NULL,
+    PRIMARY KEY (`id_canal`)
+    ) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `canal_forum`
 --
 
-INSERT INTO `canal_forum` (`id_canal`, `nom`, `description`, `type_acces`) VALUES
-(1, 'Général', 'Discussions ouvertes à tous.', 'tous'),
-(2, 'Élèves', 'Espace d\'échange entre élèves.', 'etudiant'),
-(3, 'Professeurs', 'Espace d\'échange entre professeurs.', 'professeur');
+INSERT INTO `canal_forum` (`id_canal`, `nom`, `description`, `type_acces`, `roles_createurs`) VALUES
+                                                                                                  (1, 'Général', 'Discussions ouvertes à tous les membres.', 'tous', NULL),
+                                                                                                  (2, 'Étudiants', 'Espace d\'échange entre étudiants et professeurs.', 'etudiant,professeur', 'etudiant'),
+(3, 'Alumnis et entreprises', 'Espace d\'échange entre alumnis et entreprises partenaires.', 'alumni,partenaire', NULL);
 
 -- --------------------------------------------------------
 
@@ -83,16 +84,16 @@ INSERT INTO `canal_forum` (`id_canal`, `nom`, `description`, `type_acces`) VALUE
 
 DROP TABLE IF EXISTS `candidature`;
 CREATE TABLE IF NOT EXISTS `candidature` (
-  `id_candidature` int NOT NULL AUTO_INCREMENT,
-  `id_utilisateur` int DEFAULT NULL,
-  `id_offre` int DEFAULT NULL,
-  `motivation` text,
-  `date_candidature` date DEFAULT NULL,
-  `statut` varchar(30) DEFAULT 'En attente',
-  PRIMARY KEY (`id_candidature`),
-  KEY `id_utilisateur` (`id_utilisateur`),
-  KEY `id_offre` (`id_offre`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+                                             `id_candidature` int NOT NULL AUTO_INCREMENT,
+                                             `id_utilisateur` int DEFAULT NULL,
+                                             `id_offre` int DEFAULT NULL,
+                                             `motivation` text,
+                                             `date_candidature` date DEFAULT NULL,
+                                             `statut` varchar(30) DEFAULT 'En attente',
+    PRIMARY KEY (`id_candidature`),
+    KEY `id_utilisateur` (`id_utilisateur`),
+    KEY `id_offre` (`id_offre`)
+    ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -102,16 +103,16 @@ CREATE TABLE IF NOT EXISTS `candidature` (
 
 DROP TABLE IF EXISTS `entreprise`;
 CREATE TABLE IF NOT EXISTS `entreprise` (
-  `id_entreprise` int NOT NULL AUTO_INCREMENT,
-  `nom` varchar(150) NOT NULL,
-  `adresse` varchar(255) DEFAULT NULL,
-  `code_postal` varchar(10) DEFAULT NULL,
-  `ville` varchar(100) DEFAULT NULL,
-  `site_web` varchar(255) DEFAULT NULL,
-  `secteur_activite` varchar(100) DEFAULT NULL,
-  `description` text,
-  PRIMARY KEY (`id_entreprise`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+                                            `id_entreprise` int NOT NULL AUTO_INCREMENT,
+                                            `nom` varchar(150) NOT NULL,
+    `adresse` varchar(255) DEFAULT NULL,
+    `code_postal` varchar(10) DEFAULT NULL,
+    `ville` varchar(100) DEFAULT NULL,
+    `site_web` varchar(255) DEFAULT NULL,
+    `secteur_activite` varchar(100) DEFAULT NULL,
+    `description` text,
+    PRIMARY KEY (`id_entreprise`)
+    ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -121,16 +122,16 @@ CREATE TABLE IF NOT EXISTS `entreprise` (
 
 DROP TABLE IF EXISTS `etudiant`;
 CREATE TABLE IF NOT EXISTS `etudiant` (
-  `id_utilisateur` int NOT NULL,
-  `id_formation` int DEFAULT NULL,
-  `num_etudiant` varchar(50) DEFAULT NULL,
-  `promotion` varchar(50) DEFAULT NULL,
-  `cv` varchar(255) DEFAULT NULL,
-  `date_entree` date DEFAULT NULL,
-  `statut_scolaire` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`id_utilisateur`),
-  KEY `id_formation` (`id_formation`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+                                          `id_utilisateur` int NOT NULL,
+                                          `id_formation` int DEFAULT NULL,
+                                          `num_etudiant` varchar(50) DEFAULT NULL,
+    `promotion` varchar(50) DEFAULT NULL,
+    `cv` varchar(255) DEFAULT NULL,
+    `date_entree` date DEFAULT NULL,
+    `statut_scolaire` varchar(50) DEFAULT NULL,
+    PRIMARY KEY (`id_utilisateur`),
+    KEY `id_formation` (`id_formation`)
+    ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -140,17 +141,17 @@ CREATE TABLE IF NOT EXISTS `etudiant` (
 
 DROP TABLE IF EXISTS `evenement`;
 CREATE TABLE IF NOT EXISTS `evenement` (
-  `id_evenement` int NOT NULL AUTO_INCREMENT,
-  `titre` varchar(150) NOT NULL,
-  `type_evenement` varchar(100) DEFAULT NULL,
-  `description` text,
-  `date_debut` datetime DEFAULT NULL,
-  `date_fin` datetime DEFAULT NULL,
-  `lieu` varchar(200) DEFAULT NULL,
-  `nombre_places` int DEFAULT NULL,
-  `elements_requis` text,
-  PRIMARY KEY (`id_evenement`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+                                           `id_evenement` int NOT NULL AUTO_INCREMENT,
+                                           `titre` varchar(150) NOT NULL,
+    `type_evenement` varchar(100) DEFAULT NULL,
+    `description` text,
+    `date_debut` datetime DEFAULT NULL,
+    `date_fin` datetime DEFAULT NULL,
+    `lieu` varchar(200) DEFAULT NULL,
+    `nombre_places` int DEFAULT NULL,
+    `elements_requis` text,
+    PRIMARY KEY (`id_evenement`)
+    ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -160,14 +161,27 @@ CREATE TABLE IF NOT EXISTS `evenement` (
 
 DROP TABLE IF EXISTS `formation`;
 CREATE TABLE IF NOT EXISTS `formation` (
-  `id_formation` int NOT NULL AUTO_INCREMENT,
-  `nom_formation` varchar(100) NOT NULL,
-  `niveau` varchar(50) DEFAULT NULL,
-  `duree` varchar(50) DEFAULT NULL,
-  `description` text,
-  `type_formation` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`id_formation`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+                                           `id_formation` int NOT NULL AUTO_INCREMENT,
+                                           `nom_formation` varchar(100) NOT NULL,
+    `niveau` varchar(50) DEFAULT NULL,
+    `duree` varchar(50) DEFAULT NULL,
+    `description` text,
+    `type_formation` varchar(50) DEFAULT NULL,
+    PRIMARY KEY (`id_formation`)
+    ) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `formation`
+--
+
+INSERT INTO `formation` (`id_formation`, `nom_formation`, `niveau`, `duree`, `description`, `type_formation`) VALUES
+                                                                                                                  (1, 'Bac professionnel TRPM', 'Bac', NULL, NULL, 'Professionnel'),
+                                                                                                                  (2, 'Bac professionnel MSPC', 'Bac', NULL, NULL, 'Professionnel'),
+                                                                                                                  (3, 'Bac professionnel CIEL', 'Bac', NULL, NULL, 'Professionnel'),
+                                                                                                                  (4, 'Bac technologique STI2D', 'Bac', NULL, NULL, 'Technologique'),
+                                                                                                                  (5, 'BTS CPRP', 'BTS', NULL, NULL, 'BTS'),
+                                                                                                                  (6, 'BTS MSPC', 'BTS', NULL, NULL, 'BTS'),
+                                                                                                                  (7, 'BTS SIO', 'BTS', NULL, NULL, 'BTS');
 
 -- --------------------------------------------------------
 
@@ -177,17 +191,17 @@ CREATE TABLE IF NOT EXISTS `formation` (
 
 DROP TABLE IF EXISTS `gestionnaire`;
 CREATE TABLE IF NOT EXISTS `gestionnaire` (
-  `id_utilisateur` int NOT NULL,
-  `role` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`id_utilisateur`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+                                              `id_utilisateur` int NOT NULL,
+                                              `role` varchar(100) DEFAULT NULL,
+    PRIMARY KEY (`id_utilisateur`)
+    ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `gestionnaire`
 --
 
 INSERT INTO `gestionnaire` (`id_utilisateur`, `role`) VALUES
-(1, 'Gestionnaire');
+    (1, 'Gestionnaire');
 
 -- --------------------------------------------------------
 
@@ -197,15 +211,15 @@ INSERT INTO `gestionnaire` (`id_utilisateur`, `role`) VALUES
 
 DROP TABLE IF EXISTS `inscription_evenement`;
 CREATE TABLE IF NOT EXISTS `inscription_evenement` (
-  `id_inscription` int NOT NULL AUTO_INCREMENT,
-  `id_utilisateur` int DEFAULT NULL,
-  `id_evenement` int DEFAULT NULL,
-  `date_inscription` date DEFAULT NULL,
-  `statut` varchar(30) DEFAULT 'Inscrit',
-  PRIMARY KEY (`id_inscription`),
-  KEY `id_utilisateur` (`id_utilisateur`),
-  KEY `id_evenement` (`id_evenement`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+                                                       `id_inscription` int NOT NULL AUTO_INCREMENT,
+                                                       `id_utilisateur` int DEFAULT NULL,
+                                                       `id_evenement` int DEFAULT NULL,
+                                                       `date_inscription` date DEFAULT NULL,
+                                                       `statut` varchar(30) DEFAULT 'Inscrit',
+    PRIMARY KEY (`id_inscription`),
+    KEY `id_utilisateur` (`id_utilisateur`),
+    KEY `id_evenement` (`id_evenement`)
+    ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -215,15 +229,32 @@ CREATE TABLE IF NOT EXISTS `inscription_evenement` (
 
 DROP TABLE IF EXISTS `messages`;
 CREATE TABLE IF NOT EXISTS `messages` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `sujet_id` int NOT NULL,
-  `auteur_id` int NOT NULL,
-  `contenu` text NOT NULL,
-  `date_creation` datetime DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `sujet_id` (`sujet_id`),
-  KEY `auteur_id` (`auteur_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+                                          `id` int NOT NULL AUTO_INCREMENT,
+                                          `sujet_id` int NOT NULL,
+                                          `auteur_id` int NOT NULL,
+                                          `contenu` text NOT NULL,
+                                          `date_creation` datetime DEFAULT CURRENT_TIMESTAMP,
+                                          PRIMARY KEY (`id`),
+    KEY `sujet_id` (`sujet_id`),
+    KEY `auteur_id` (`auteur_id`)
+    ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `message_contact`
+--
+
+DROP TABLE IF EXISTS `message_contact`;
+CREATE TABLE IF NOT EXISTS `message_contact` (
+                                                 `id_message` int NOT NULL AUTO_INCREMENT,
+                                                 `nom` varchar(150) NOT NULL,
+    `email` varchar(150) NOT NULL,
+    `sujet` varchar(200) NOT NULL,
+    `message` text NOT NULL,
+    `date_envoi` datetime DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id_message`)
+    ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -233,22 +264,23 @@ CREATE TABLE IF NOT EXISTS `messages` (
 
 DROP TABLE IF EXISTS `offre`;
 CREATE TABLE IF NOT EXISTS `offre` (
-  `id_offre` int NOT NULL AUTO_INCREMENT,
-  `id_entreprise` int DEFAULT NULL,
-  `id_auteur` int DEFAULT NULL,
-  `titre` varchar(150) NOT NULL,
-  `description` text,
-  `missions` text,
-  `type_offre` varchar(30) DEFAULT NULL,
-  `salaire` decimal(10,2) DEFAULT NULL,
-  `lieu` varchar(150) DEFAULT NULL,
-  `date_publication` date DEFAULT NULL,
-  `date_expiration` date DEFAULT NULL,
-  `etat` varchar(30) DEFAULT 'Ouverte',
-  PRIMARY KEY (`id_offre`),
-  KEY `id_entreprise` (`id_entreprise`),
-  KEY `id_auteur` (`id_auteur`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+                                       `id_offre` int NOT NULL AUTO_INCREMENT,
+                                       `id_entreprise` int DEFAULT NULL,
+                                       `id_auteur` int DEFAULT NULL,
+                                       `titre` varchar(150) NOT NULL,
+    `description` text,
+    `missions` text,
+    `type_offre` varchar(30) DEFAULT NULL,
+    `salaire` decimal(10,2) DEFAULT NULL,
+    `lieu` varchar(150) DEFAULT NULL,
+    `date_publication` date DEFAULT NULL,
+    `date_expiration` date DEFAULT NULL,
+    `etat` varchar(30) DEFAULT 'Ouverte',
+    `profil_cible` varchar(30) NOT NULL DEFAULT 'tous',
+    PRIMARY KEY (`id_offre`),
+    KEY `id_entreprise` (`id_entreprise`),
+    KEY `id_auteur` (`id_auteur`)
+    ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -258,11 +290,11 @@ CREATE TABLE IF NOT EXISTS `offre` (
 
 DROP TABLE IF EXISTS `organise`;
 CREATE TABLE IF NOT EXISTS `organise` (
-  `id_utilisateur` int NOT NULL,
-  `id_evenement` int NOT NULL,
-  PRIMARY KEY (`id_utilisateur`,`id_evenement`),
-  KEY `id_evenement` (`id_evenement`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+                                          `id_utilisateur` int NOT NULL,
+                                          `id_evenement` int NOT NULL,
+                                          PRIMARY KEY (`id_utilisateur`,`id_evenement`),
+    KEY `id_evenement` (`id_evenement`)
+    ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -272,12 +304,12 @@ CREATE TABLE IF NOT EXISTS `organise` (
 
 DROP TABLE IF EXISTS `partenaire`;
 CREATE TABLE IF NOT EXISTS `partenaire` (
-  `id_utilisateur` int NOT NULL,
-  `poste` varchar(100) DEFAULT NULL,
-  `service` varchar(100) DEFAULT NULL,
-  `motif_inscription` text,
-  PRIMARY KEY (`id_utilisateur`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+                                            `id_utilisateur` int NOT NULL,
+                                            `poste` varchar(100) DEFAULT NULL,
+    `service` varchar(100) DEFAULT NULL,
+    `motif_inscription` text,
+    PRIMARY KEY (`id_utilisateur`)
+    ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -287,16 +319,16 @@ CREATE TABLE IF NOT EXISTS `partenaire` (
 
 DROP TABLE IF EXISTS `post`;
 CREATE TABLE IF NOT EXISTS `post` (
-  `id_post` int NOT NULL AUTO_INCREMENT,
-  `id_canal` int DEFAULT NULL,
-  `id_utilisateur` int DEFAULT NULL,
-  `titre` varchar(150) NOT NULL,
-  `contenu` text NOT NULL,
-  `date_publication` datetime DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id_post`),
-  KEY `id_canal` (`id_canal`),
-  KEY `id_utilisateur` (`id_utilisateur`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+                                      `id_post` int NOT NULL AUTO_INCREMENT,
+                                      `id_canal` int DEFAULT NULL,
+                                      `id_utilisateur` int DEFAULT NULL,
+                                      `titre` varchar(150) NOT NULL,
+    `contenu` text NOT NULL,
+    `date_publication` datetime DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id_post`),
+    KEY `id_canal` (`id_canal`),
+    KEY `id_utilisateur` (`id_utilisateur`)
+    ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -306,18 +338,53 @@ CREATE TABLE IF NOT EXISTS `post` (
 
 DROP TABLE IF EXISTS `professeur`;
 CREATE TABLE IF NOT EXISTS `professeur` (
-  `id_utilisateur` int NOT NULL,
-  `specialite` varchar(100) DEFAULT NULL,
-  `grade` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`id_utilisateur`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+                                            `id_utilisateur` int NOT NULL,
+                                            `specialite` varchar(100) DEFAULT NULL,
+    `grade` varchar(100) DEFAULT NULL,
+    PRIMARY KEY (`id_utilisateur`)
+    ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `professeur`
 --
 
 INSERT INTO `professeur` (`id_utilisateur`, `specialite`, `grade`) VALUES
-(2, 'Mathématiques', NULL);
+    (2, 'Mathématiques', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `professeur_formation`
+--
+
+DROP TABLE IF EXISTS `professeur_formation`;
+CREATE TABLE IF NOT EXISTS `professeur_formation` (
+                                                      `id_utilisateur` int NOT NULL,
+                                                      `id_formation` int NOT NULL,
+                                                      PRIMARY KEY (`id_utilisateur`,`id_formation`)
+    ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `professeur_formation`
+--
+
+INSERT INTO `professeur_formation` (`id_utilisateur`, `id_formation`) VALUES
+                                                                          (3, 6),
+                                                                          (3, 7);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `reinitialisation_mdp`
+--
+
+DROP TABLE IF EXISTS `reinitialisation_mdp`;
+CREATE TABLE IF NOT EXISTS `reinitialisation_mdp` (
+                                                      `id_utilisateur` int NOT NULL,
+                                                      `jeton_hash` char(64) NOT NULL,
+    `expiration` datetime NOT NULL,
+    PRIMARY KEY (`id_utilisateur`)
+    ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -327,15 +394,15 @@ INSERT INTO `professeur` (`id_utilisateur`, `specialite`, `grade`) VALUES
 
 DROP TABLE IF EXISTS `reponse`;
 CREATE TABLE IF NOT EXISTS `reponse` (
-  `id_reponse` int NOT NULL AUTO_INCREMENT,
-  `id_post` int DEFAULT NULL,
-  `id_utilisateur` int DEFAULT NULL,
-  `contenu` text NOT NULL,
-  `date_publication` datetime DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id_reponse`),
-  KEY `id_post` (`id_post`),
-  KEY `id_utilisateur` (`id_utilisateur`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+                                         `id_reponse` int NOT NULL AUTO_INCREMENT,
+                                         `id_post` int DEFAULT NULL,
+                                         `id_utilisateur` int DEFAULT NULL,
+                                         `contenu` text NOT NULL,
+                                         `date_publication` datetime DEFAULT CURRENT_TIMESTAMP,
+                                         PRIMARY KEY (`id_reponse`),
+    KEY `id_post` (`id_post`),
+    KEY `id_utilisateur` (`id_utilisateur`)
+    ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -345,14 +412,14 @@ CREATE TABLE IF NOT EXISTS `reponse` (
 
 DROP TABLE IF EXISTS `sujets`;
 CREATE TABLE IF NOT EXISTS `sujets` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `section` enum('general','eleves','professeurs') NOT NULL,
-  `titre` varchar(150) NOT NULL,
-  `auteur_id` int NOT NULL,
-  `date_creation` datetime DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `auteur_id` (`auteur_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+                                        `id` int NOT NULL AUTO_INCREMENT,
+                                        `section` enum('general','eleves','professeurs') NOT NULL,
+    `titre` varchar(150) NOT NULL,
+    `auteur_id` int NOT NULL,
+    `date_creation` datetime DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    KEY `auteur_id` (`auteur_id`)
+    ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -362,75 +429,26 @@ CREATE TABLE IF NOT EXISTS `sujets` (
 
 DROP TABLE IF EXISTS `utilisateur`;
 CREATE TABLE IF NOT EXISTS `utilisateur` (
-  `id_utilisateur` int NOT NULL AUTO_INCREMENT,
-  `nom` varchar(100) NOT NULL,
-  `prenom` varchar(100) NOT NULL,
-  `email` varchar(150) NOT NULL,
-  `mot_de_passe` varchar(255) NOT NULL,
-  `type_profil` varchar(30) NOT NULL,
-  `statut_validation` varchar(30) DEFAULT 'En attente',
-  PRIMARY KEY (`id_utilisateur`),
-  UNIQUE KEY `email` (`email`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+                                             `id_utilisateur` int NOT NULL AUTO_INCREMENT,
+                                             `nom` varchar(100) NOT NULL,
+    `prenom` varchar(100) NOT NULL,
+    `email` varchar(150) NOT NULL,
+    `mot_de_passe` varchar(255) NOT NULL,
+    `type_profil` varchar(30) NOT NULL,
+    `statut_validation` varchar(30) DEFAULT 'En attente',
+    PRIMARY KEY (`id_utilisateur`),
+    UNIQUE KEY `email` (`email`)
+    ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `utilisateur`
 --
 
 INSERT INTO `utilisateur` (`id_utilisateur`, `nom`, `prenom`, `email`, `mot_de_passe`, `type_profil`, `statut_validation`) VALUES
-(1, 'Admin', 'Root', 'admin@lprs.fr', '$2y$10$wMNt6QMXfjFWs21Fpxv96uYEzbJOp7VirbPsJq5gY4WXW33iy0eoW', 'gestionnaire', 'Validé'),
-(2, 'Martin', 'Paul', 'prof@lprs.fr', '$2y$10$lFRA7UkGGB.SG1OeChHwxO6Z0JMTObZw.6LzGFX9F6DmSC3Uo6h/C', 'professeur', 'Validé');
+                                                                                                                               (1, 'Admin', 'Root', 'admin@lprs.fr', '$2y$10$wMNt6QMXfjFWs21Fpxv96uYEzbJOp7VirbPsJq5gY4WXW33iy0eoW', 'gestionnaire', 'Validé'),
+                                                                                                                               (2, 'Martin', 'Paul', 'prof@lprs.fr', '$2y$10$lFRA7UkGGB.SG1OeChHwxO6Z0JMTObZw.6LzGFX9F6DmSC3Uo6h/C', 'professeur', 'Validé');
 COMMIT;
 
-INSERT INTO `formation` (`nom_formation`, `niveau`, `type_formation`) VALUES
-('Bac professionnel TRPM', 'Bac', 'Professionnel'),
-('Bac professionnel MSPC', 'Bac', 'Professionnel'),
-('Bac professionnel CIEL', 'Bac', 'Professionnel'),
-('Bac technologique STI2D', 'Bac', 'Technologique'),
-('BTS CPRP', 'BTS', 'BTS'),
-('BTS MSPC', 'BTS', 'BTS'),
-('BTS SIO', 'BTS', 'BTS');
-
--- Offre : ouverte à tous ou à un profil particulier ('tous', 'etudiant', 'alumni')
-ALTER TABLE `offre` ADD COLUMN `profil_cible` varchar(30) NOT NULL DEFAULT 'tous';
-
--- Professeur : formation(s) dans lesquelles il intervient
-CREATE TABLE IF NOT EXISTS `professeur_formation` (
-    `id_utilisateur` int NOT NULL,
-    `id_formation` int NOT NULL,
-    PRIMARY KEY (`id_utilisateur`, `id_formation`)
-    ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
-
--- Mot de passe oublié : jeton à usage unique (stocké hashé), valable 1 heure
-CREATE TABLE IF NOT EXISTS `reinitialisation_mdp` (
-    `id_utilisateur` int NOT NULL,
-    `jeton_hash` char(64) NOT NULL,
-    `expiration` datetime NOT NULL,
-    PRIMARY KEY (`id_utilisateur`)
-    ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
-
--- Formulaire de contact
-CREATE TABLE IF NOT EXISTS `message_contact` (
-    `id_message` int NOT NULL AUTO_INCREMENT,
-    `nom` varchar(150) NOT NULL,
-    `email` varchar(150) NOT NULL,
-    `sujet` varchar(200) NOT NULL,
-    `message` text NOT NULL,
-    `date_envoi` datetime DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (`id_message`)
-    ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
-
-ALTER TABLE `canal_forum` ADD COLUMN `roles_createurs` varchar(100) DEFAULT NULL;
-
-UPDATE `canal_forum` SET `nom` = 'Général', `description` = 'Discussions ouvertes à tous les membres.',
-                         `type_acces` = 'tous', `roles_createurs` = NULL WHERE `id_canal` = 1;
-
-UPDATE `canal_forum` SET `nom` = 'Étudiants', `description` = 'Espace d\'échange entre étudiants et professeurs.',
-  `type_acces` = 'etudiant,professeur', `roles_createurs` = 'etudiant' WHERE `id_canal` = 2;
-
-UPDATE `canal_forum` SET `nom` = 'Alumnis et entreprises', `description` = 'Espace d\'échange entre alumnis et entreprises partenaires.',
-  `type_acces` = 'alumni,partenaire', `roles_createurs` = NULL WHERE `id_canal` = 3;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
