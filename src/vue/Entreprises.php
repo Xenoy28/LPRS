@@ -1,4 +1,7 @@
 <?php
+
+use repository\EntrepriseRepository;
+
 require_once __DIR__ . '/../repository/EntrepriseRepository.php';
 $repo = new EntrepriseRepository();
 $q = trim($_GET['q'] ?? '');
@@ -10,7 +13,7 @@ $peutCreer = in_array($_SESSION['user_role'], ['partenaire', 'alumni']);
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Entreprises</title>
+    <title>Enterprises</title>
 </head>
 <body>
 <?php require __DIR__ . '/_menu.php'; ?>

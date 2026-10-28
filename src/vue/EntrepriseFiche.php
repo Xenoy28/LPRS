@@ -1,4 +1,7 @@
 <?php
+
+use repository\EntrepriseRepository;
+
 require_once __DIR__ . '/../repository/EntrepriseRepository.php';
 require_once __DIR__ . '/../repository/OffreRepository.php';
 $repo = new EntrepriseRepository();

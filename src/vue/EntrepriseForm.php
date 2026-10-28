@@ -1,4 +1,8 @@
 <?php
+
+use modele\Entreprise;
+use repository\EntrepriseRepository;
+
 require_once __DIR__ . '/../repository/EntrepriseRepository.php';
 $repo = new EntrepriseRepository();
 $id = (int)($_GET['id'] ?? 0);
