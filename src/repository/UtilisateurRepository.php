@@ -94,5 +94,46 @@ class UtilisateurRepository
     {
         return $this->bdd->query("SELECT COUNT(*) FROM utilisateur WHERE type_profil = 'gestionnaire'")->fetchColumn();
     }
+
+//UPDATE
+    public function modifier(Utilisateur $u)
+    {
+        $this->bdd->prepare('UPDATE utilisateur SET nom = ?, prenom = ?, email = ?, mot_de_passe = ? WHERE id_utilisateur = ?')
+            ->execute([$u->getNomUtilisateur(), $u->getPrenomUtilisateur(), $u->getEmailUtilisateur(),
+                $u->getMdpUtilisateur(), $u->getIdUtilisateur()]);
+
+        $type = $u->getTypeProfil();
+        $sets = [];
+        $valeurs = [];
+        foreach (self::COLONNES[$type] as $c) {
+            $sets[] = $c . ' = ?';
+            $valeurs[] = $u->getDetails()[$c] ?? null;
+        }
+        $valeurs[] = $u->getIdUtilisateur();
+        $this->bdd->prepare('UPDATE ' . $type . ' SET ' . implode(', ', $sets) . ' WHERE id_utilisateur = ?')->execute($valeurs);
+    }
+    // DELETE : supprime l'utilisateur et tout ce qui lui est rattaché
+    public function supprimer($id)
+    {
+        $u = $this->getById($id);
+        if (!$u) {
+            return;
+        }
+        $requetes = [
+            'DELETE FROM candidature WHERE id_offre IN (SELECT id_offre FROM offre WHERE id_auteur = ?)',
+            'DELETE FROM candidature WHERE id_utilisateur = ?',
+            'DELETE FROM offre WHERE id_auteur = ?',
+            'DELETE FROM inscription_evenement WHERE id_utilisateur = ?',
+            'DELETE FROM organise WHERE id_utilisateur = ?',
+            'DELETE FROM appartient_entreprise WHERE id_utilisateur = ?',
+            'DELETE FROM professeur_formation WHERE id_utilisateur = ?',
+            'DELETE FROM reinitialisation_mdp WHERE id_utilisateur = ?',
+            'DELETE FROM ' . $u->getTypeProfil() . ' WHERE id_utilisateur = ?',
+            'DELETE FROM utilisateur WHERE id_utilisateur = ?',
+        ];
+        foreach ($requetes as $sql) {
+            $this->bdd->prepare($sql)->execute([$id]);
+        }
+    }
 }
 
