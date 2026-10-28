@@ -419,6 +419,18 @@ CREATE TABLE IF NOT EXISTS `message_contact` (
     `date_envoi` datetime DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`id_message`)
     ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+
+ALTER TABLE `canal_forum` ADD COLUMN `roles_createurs` varchar(100) DEFAULT NULL;
+
+UPDATE `canal_forum` SET `nom` = 'Général', `description` = 'Discussions ouvertes à tous les membres.',
+                         `type_acces` = 'tous', `roles_createurs` = NULL WHERE `id_canal` = 1;
+
+UPDATE `canal_forum` SET `nom` = 'Étudiants', `description` = 'Espace d\'échange entre étudiants et professeurs.',
+  `type_acces` = 'etudiant,professeur', `roles_createurs` = 'etudiant' WHERE `id_canal` = 2;
+
+UPDATE `canal_forum` SET `nom` = 'Alumnis et entreprises', `description` = 'Espace d\'échange entre alumnis et entreprises partenaires.',
+  `type_acces` = 'alumni,partenaire', `roles_createurs` = NULL WHERE `id_canal` = 3;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
