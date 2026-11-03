@@ -22,6 +22,7 @@ $pages = [
     'evenement_form'     => ['EvenementForm', MEMBRES],
     'annuaire'           => ['AnnuaireAlumni', MEMBRES],
     'annuaire_etudiants' => ['AnnuaireEtudiants', ['professeur']],
+    'forum'              => ['Forum', MEMBRES],
 ];
 
 $page = $_GET['page'] ?? 'accueil';
