@@ -23,6 +23,7 @@ $pages = [
     'annuaire'           => ['AnnuaireAlumni', MEMBRES],
     'annuaire_etudiants' => ['AnnuaireEtudiants', ['professeur']],
     'forum'              => ['Forum', MEMBRES],
+    'mentions_legales'   => ['MentionsLegales', null],
 ];
 
 $page = $_GET['page'] ?? 'accueil';

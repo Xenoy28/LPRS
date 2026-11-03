@@ -97,7 +97,7 @@ $connecte = !empty($_SESSION['user_id']);
 <footer class="footer">
     <ul class="footer-liens">
         <li><a href="#">Plan du site</a></li>
-        <li><a href="#">Mentions légales</a></li>
+        <li><a href="index.php?page=mentions_legales">Mentions légales</a></li>
         <li><a href="index.php?page=contact">Contact</a></li>
     </ul>
     <p class="footer-copy">© 2026 LPRS – Tous droits réservés</p>
