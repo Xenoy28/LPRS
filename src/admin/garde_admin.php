@@ -1,7 +1,7 @@
 <?php
-session_start();
 require_once __DIR__ . '/outils.php';
 require_once __DIR__ . '/../bdd/Bdd.php';
+
 function refuserAcces()
 {
     header('Location: ../../index.php?page=login');
@@ -25,9 +25,4 @@ $adminConnecte = $requete->fetch(PDO::FETCH_ASSOC);
 if (!$adminConnecte) {
     session_destroy();
     refuserAcces();
-}
-
-function e($texte)
-{
-    return htmlspecialchars((string)$texte, ENT_QUOTES, 'UTF-8');
 }
