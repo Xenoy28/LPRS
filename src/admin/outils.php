@@ -1,31 +1,4 @@
 <?php
-
-require_once __DIR__ . '/outils.php';
-require_once __DIR__ . '/../bdd/Bdd.php';
-
-{
-    header('Location: ../../index.php?page=login');
-    exit;
-}
-
-if (empty($_SESSION['user_id']) || ($_SESSION['user_role'] ?? '') !== 'gestionnaire') {
-    refuserAcces();
-}
-$bdd = (new Bdd())->getConnexionBdd();
-$requete = $bdd->prepare(
-    "SELECT id_utilisateur, nom, prenom
-     FROM utilisateur
-     WHERE id_utilisateur = :id
-       AND type_profil = 'gestionnaire'
-       AND statut_validation = 'Validé'"
-);
-$requete->execute(['id' => $_SESSION['user_id']]);
-$adminConnecte = $requete->fetch(PDO::FETCH_ASSOC);
-
-if (!$adminConnecte) {
-    session_destroy();
-    refuserAcces();
-}
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -125,6 +98,8 @@ function supprimerUtilisateur(PDO $bdd, $id)
         'DELETE FROM inscription_evenement WHERE id_utilisateur = ?',
         'DELETE FROM organise WHERE id_utilisateur = ?',
         'DELETE FROM appartient_entreprise WHERE id_utilisateur = ?',
+        'DELETE FROM professeur_formation WHERE id_utilisateur = ?',
+        'DELETE FROM reinitialisation_mdp WHERE id_utilisateur = ?',
         'DELETE FROM etudiant WHERE id_utilisateur = ?',
         'DELETE FROM alumni WHERE id_utilisateur = ?',
         'DELETE FROM professeur WHERE id_utilisateur = ?',

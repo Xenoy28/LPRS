@@ -52,7 +52,7 @@ require __DIR__ . '/entete.php';
                     <?php endforeach; ?>
                 </table>
             </div>
-            <p><a class="bouton" href="utilisateurs.php?statut=En+attente">Traiter les inscriptions</a></p>
+            <p><a class="bouton" href="validation.php">Traiter les inscriptions</a></p>
         <?php endif; ?>
     </div>
 <?php require __DIR__ . '/pied.php'; ?>
