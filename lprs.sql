@@ -440,6 +440,17 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
     UNIQUE KEY `email` (`email`)
     ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+
+CREATE TABLE IF NOT EXISTS `message_contact` (
+                                                 `id_message` int NOT NULL AUTO_INCREMENT,
+                                                 `nom` varchar(150) NOT NULL,
+    `email` varchar(150) NOT NULL,
+    `sujet` varchar(200) NOT NULL,
+    `message` text NOT NULL,
+    `date_envoi` datetime DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id_message`)
+    ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+
 --
 -- Déchargement des données de la table `utilisateur`
 --
