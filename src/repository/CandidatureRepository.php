@@ -4,6 +4,8 @@ namespace repository;
 
 use Bdd;
 use modele\Candidature;
+use PDO;
+use PDOStatement;
 
 require_once __DIR__ . '/../bdd/Bdd.php';
 require_once __DIR__ . '/../modele/Candidature.php';
