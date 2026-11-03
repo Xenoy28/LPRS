@@ -13,7 +13,7 @@ require __DIR__ . '/_entete.php';
         Email : administration@lyceerobertschuman.com<br>
         secretariat@lyceerobertschuman.com<br>
     </p>
-    <p>Directeurs de la publication : Marco Mendes, Dylan Matias, Kevin Delorme, Mathis Nguyen</p>
+    <p>Directeurs de la publication : Marco Mendes, Dylan Matias, Kevyn Delorme, Mathis Nguyen</p>
 
     <h2>2. Hébergement</h2>
     <p>
