@@ -17,7 +17,7 @@ require __DIR__ . '/_entete.php';
 
     <h2>2. Hébergement</h2>
     <p>
-        Ce site est hébergé par [nom de l'hébergeur], [adresse de l'hébergeur], [site web de l'hébergeur].
+        Ce site est hébergé par le lycée Robert Shuman, (<a href="https://www.lyceerobertschuman.com/" target="_blank" rel="noopener">www.lyceerobertschuman.com/</a>).
     </p>
 
     <h2>3. Conception et réalisation</h2>
@@ -41,14 +41,14 @@ require __DIR__ . '/_entete.php';
         (offres, événements, annuaire, forum) et réponse à vos demandes de contact.</p>
     <p><strong>Destinataires :</strong> les gestionnaires de la plateforme et, pour les informations de profil
         rendues visibles (par exemple dans l'annuaire), les autres membres connectés. Vos données ne sont ni vendues ni cédées à des tiers.</p>
-    <p><strong>Durée de conservation :</strong> [à définir, par exemple : comptes 3 ans après la dernière connexion,
-        messages de contact 1 an].</p>
+    <p><strong>Durée de conservation :</strong> Les comptes sont conserver 3 ans après la dernière connexion et les
+        messages de contact 1 an.</p>
     <p>
         <strong>Vos droits :</strong> conformément au Règlement général sur la protection des données (RGPD) et à la loi
         Informatique et Libertés, vous disposez d'un droit d'accès, de rectification, d'effacement, de limitation,
         d'opposition et de portabilité de vos données. Pour l'exercer, écrivez-nous via la page
-        <a href="index.php?page=contact">Contact</a> ou à [adresse email du référent données personnelles].
-        Vous pouvez aussi adresser une réclamation à la CNIL (<a href="https://www.cnil.fr" target="_blank" rel="noopener">www.cnil.fr</a>).
+        <a href="index.php?page=contact">Contact</a>
+        .Vous pouvez aussi adresser une réclamation à la CNIL (<a href="https://www.cnil.fr" target="_blank" rel="noopener">www.cnil.fr</a>).
     </p>
 
     <h2>6. Cookies</h2>
