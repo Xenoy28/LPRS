@@ -12,7 +12,7 @@ require_once __DIR__ . '/../repository/CanalRepository.php';
 require_once __DIR__ . '/../repository/PostRepository.php';
 require_once __DIR__ . '/../repository/ReponseRepository.php';
 
-const FORUM_URL = 'Forum.php';
+const FORUM_URL = 'index.php?page=forum';
 
 const LONGUEUR_TITRE   = 150;
 const LONGUEUR_MESSAGE = 5000;

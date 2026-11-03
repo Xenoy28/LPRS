@@ -120,15 +120,15 @@ if ($page === 'accueil') {
 <div class="topbar">
     <div>LPRS</div>
     <div class="centre">
-        <a href="Accueil.php">Accueil</a>
+        <a href="index.php">Accueil</a>
         <a href="#">Services</a>
-        <a href="Forum.php">Forum</a>
+        <a href="index.php?page=forum">Forum</a>
     </div>
     <div class="droite">
         <button class="burger" onclick="toggleMenu()">☰</button>
         <ul class="menu" id="menu">
-            <li><a href="#">Profil</a></li>
-            <li><a href="../traitement/Logout.php">Déconnexion</a></li>
+            <li><a href="index.php?page=profil">Profil</a></li>
+            <li><a href="src/traitement/Logout.php">Déconnexion</a></li>
             <li><a href="#">Paramètres</a></li>
         </ul>
     </div>
