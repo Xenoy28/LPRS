@@ -135,5 +135,58 @@ class UtilisateurRepository
             $this->bdd->prepare($sql)->execute([$id]);
         }
     }
+    public function annuaireAlumni($nom = '', $promotion = '', $secteur = '')
+    {
+        $sql = "SELECT u.id_utilisateur, u.nom, u.prenom, a.promotion, a.situation_professionnelle,
+                       GROUP_CONCAT(DISTINCT e.nom SEPARATOR ', ') AS entreprises,
+                       GROUP_CONCAT(DISTINCT ae.poste SEPARATOR ', ') AS postes,
+                       GROUP_CONCAT(DISTINCT e.secteur_activite SEPARATOR ', ') AS secteurs
+                FROM utilisateur u
+                JOIN alumni a ON a.id_utilisateur = u.id_utilisateur
+                LEFT JOIN appartient_entreprise ae ON ae.id_utilisateur = u.id_utilisateur
+                LEFT JOIN entreprise e ON e.id_entreprise = ae.id_entreprise
+                WHERE u.statut_validation = 'Validé'";
+        $params = [];
+        if ($nom !== '') {
+            $sql .= ' AND (u.nom LIKE ? OR u.prenom LIKE ?)';
+            array_push($params, "%$nom%", "%$nom%");
+        }
+        if ($promotion !== '') {
+            $sql .= ' AND a.promotion LIKE ?';
+            $params[] = "%$promotion%";
+        }
+        if ($secteur !== '') {
+            $sql .= ' AND e.secteur_activite LIKE ?';
+            $params[] = "%$secteur%";
+        }
+        $r = $this->bdd->prepare($sql . ' GROUP BY u.id_utilisateur ORDER BY u.nom, u.prenom');
+        $r->execute($params);
+        return $r->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function annuaireEtudiants($nom = '', $promotion = '', $idFormation = 0)
+    {
+        $sql = "SELECT u.id_utilisateur, u.nom, u.prenom, et.promotion, et.cv, f.nom_formation
+                FROM utilisateur u
+                JOIN etudiant et ON et.id_utilisateur = u.id_utilisateur
+                LEFT JOIN formation f ON f.id_formation = et.id_formation
+                WHERE u.statut_validation = 'Validé'";
+        $params = [];
+        if ($nom !== '') {
+            $sql .= ' AND (u.nom LIKE ? OR u.prenom LIKE ?)';
+            array_push($params, "%$nom%", "%$nom%");
+        }
+        if ($promotion !== '') {
+            $sql .= ' AND et.promotion LIKE ?';
+            $params[] = "%$promotion%";
+        }
+        if ($idFormation > 0) {
+            $sql .= ' AND et.id_formation = ?';
+            $params[] = $idFormation;
+        }
+        $r = $this->bdd->prepare($sql . ' ORDER BY u.nom, u.prenom');
+        $r->execute($params);
+        return $r->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
 
