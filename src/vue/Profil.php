@@ -53,4 +53,13 @@ $h = function ($v) { return htmlspecialchars((string)$v); };
 
 <p><a href="index.php">Accueil</a> | <a href="src/traitement/Logout.php">Déconnexion</a></p>
 </body>
+
+<footer class="footer">
+    <ul class="footer-liens">
+        <li><a href="index.php?page=plan_site">Plan du site</a></li>
+        <li><a href="index.php?page=mentions_legales">Mentions légales</a></li>
+        <li><a href="index.php?page=contact">Contact</a></li>
+    </ul>
+    <p class="footer-copy">© 2026 LPRS – Tous droits réservés</p>
+</footer>
 </html>
