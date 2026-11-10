@@ -24,6 +24,7 @@ $pages = [
     'annuaire_etudiants' => ['AnnuaireEtudiants', ['professeur']],
     'forum'              => ['Forum', MEMBRES],
     'mentions_legales'   => ['MentionsLegales', null],
+    'plan_site'          => ['PlanSite', null],
 ];
 
 $page = $_GET['page'] ?? 'accueil';
