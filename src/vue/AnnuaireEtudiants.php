@@ -40,4 +40,17 @@ require __DIR__ . '/_entete.php';
     <?php endforeach; ?>
     <?php if (!$etudiants): ?><tr><td colspan="5">Aucun résultat.</td></tr><?php endif; ?>
 </table>
+<<<<<<< HEAD
 <?php require __DIR__ . '/_pied.php'; ?>
+=======
+<footer class="footer">
+    <ul class="footer-liens">
+        <li><a href="index.php?page=plan_site">Plan du site</a></li>
+        <li><a href="index.php?page=mentions_legales">Mentions légales</a></li>
+        <li><a href="index.php?page=contact">Contact</a></li>
+    </ul>
+    <p class="footer-copy">© 2026 LPRS – Tous droits réservés</p>
+</footer>
+</body>
+</html>
+>>>>>>> 5ac582da7984e4e8177bda977d22c1c4811ab93f
