@@ -13,15 +13,10 @@ $peutPublier = in_array($role, ['partenaire', 'alumni']);
 $mesOffres = $peutPublier ? $repo->listeGeree($_SESSION['user_id']) : [];
 $mesCandidatures = in_array($role, ['etudiant', 'alumni']) ? (new CandidatureRepository())->listeParUtilisateur($_SESSION['user_id']) : [];
 ?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Offres</title>
-</head>
-<body>
-<?php require __DIR__ . '/_menu.php'; ?>
-<h1>Offres d'emploi, de stage et d'alternance</h1>
+<?php
+$titre = 'Offres d\'emploi, de stage et d\'alternance';
+require __DIR__ . '/_entete.php';
+?>
 
 <?php if ($peutPublier): ?>
     <p><a href="index.php?page=offre_form">Publier une offre</a></p>
@@ -81,13 +76,4 @@ $mesCandidatures = in_array($role, ['etudiant', 'alumni']) ? (new CandidatureRep
     </ul>
 <?php endif; ?>
 
-<footer class="footer">
-    <ul class="footer-liens">
-        <li><a href="index.php?page=plan_site">Plan du site</a></li>
-        <li><a href="index.php?page=mentions_legales">Mentions légales</a></li>
-        <li><a href="index.php?page=contact">Contact</a></li>
-    </ul>
-    <p class="footer-copy">© 2026 LPRS – Tous droits réservés</p>
-</footer>
-</body>
-</html>
+<?php require __DIR__ . '/_pied.php'; ?>

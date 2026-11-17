@@ -11,15 +11,10 @@ if (!$offre || (int)$offre->id_auteur !== (int)$_SESSION['user_id']) {
 }
 $candidatures = (new CandidatureRepository())->listeParOffre($offre->id_offre);
 ?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Candidatures</title>
-</head>
-<body>
-<?php require __DIR__ . '/_menu.php'; ?>
-<h1>Candidatures : <?= h($offre->titre) ?></h1>
+<?php
+$titre = 'Candidatures : ' . $offre->titre;
+require __DIR__ . '/_entete.php';
+?>
 <p><a href="index.php?page=offre&id=<?= (int)$offre->id_offre ?>">← Retour à l'offre</a></p>
 
 <?php foreach ($candidatures as $c): ?>
@@ -35,5 +30,5 @@ $candidatures = (new CandidatureRepository())->listeParOffre($offre->id_offre);
     </fieldset>
 <?php endforeach; ?>
 <?php if (!$candidatures): ?><p>Aucune candidature.</p><?php endif; ?>
-</body>
-</html>
+
+<?php require __DIR__ . '/_pied.php'; ?>

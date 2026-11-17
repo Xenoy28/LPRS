@@ -7,15 +7,11 @@ $idFormation = (int)($_GET['formation'] ?? 0);
 $etudiants = (new UtilisateurRepository())->annuaireEtudiants($nom, $promotion, $idFormation);
 $formations = (new FormationRepository())->liste();
 ?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Annuaire des étudiants</title>
-</head>
-<body>
-<?php require __DIR__ . '/_menu.php'; ?>
-<h1>Annuaire des étudiants actuels</h1>
+<?php
+$titre = 'Annuaire des étudiants actuels';
+require __DIR__ . '/_entete.php';
+?>
+
 <p><a href="index.php?page=annuaire">Annuaire des anciens élèves</a></p>
 
 <form method="get" action="index.php">
@@ -44,5 +40,4 @@ $formations = (new FormationRepository())->liste();
     <?php endforeach; ?>
     <?php if (!$etudiants): ?><tr><td colspan="5">Aucun résultat.</td></tr><?php endif; ?>
 </table>
-</body>
-</html>
+<?php require __DIR__ . '/_pied.php'; ?>

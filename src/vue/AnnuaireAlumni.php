@@ -5,15 +5,10 @@ $promotion = trim($_GET['promotion'] ?? '');
 $secteur = trim($_GET['secteur'] ?? '');
 $alumni = (new UtilisateurRepository())->annuaireAlumni($nom, $promotion, $secteur);
 ?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Annuaire des anciens élèves</title>
-</head>
-<body>
-<?php require __DIR__ . '/_menu.php'; ?>
-<h1>Annuaire des anciens élèves</h1>
+<?php
+$titre = 'Annuaire des anciens élèves';
+require __DIR__ . '/_entete.php';
+?>
 <?php if ($_SESSION['user_role'] === 'professeur'): ?>
     <p><a href="index.php?page=annuaire_etudiants">Annuaire des étudiants actuels</a></p>
 <?php endif; ?>
@@ -40,5 +35,5 @@ $alumni = (new UtilisateurRepository())->annuaireAlumni($nom, $promotion, $secte
     <?php endforeach; ?>
     <?php if (!$alumni): ?><tr><td colspan="6">Aucun résultat.</td></tr><?php endif; ?>
 </table>
-</body>
-</html>
+
+<?php require __DIR__ . '/_pied.php'; ?>
