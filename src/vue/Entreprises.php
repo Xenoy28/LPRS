@@ -9,15 +9,10 @@ $entreprises = $repo->liste($q);
 $mesEntreprises = $repo->mesEntreprises($_SESSION['user_id']);
 $peutCreer = in_array($_SESSION['user_role'], ['partenaire', 'alumni']);
 ?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Enterprises</title>
-</head>
-<body>
-<?php require __DIR__ . '/_menu.php'; ?>
-<h1>Entreprises partenaires</h1>
+<?php
+$titre = 'Entreprises partenaires';
+require __DIR__ . '/_entete.php';
+?>
 
 <?php if ($peutCreer): ?>
     <h2>Mes entreprises</h2>
@@ -53,13 +48,4 @@ $peutCreer = in_array($_SESSION['user_role'], ['partenaire', 'alumni']);
     <?php if (!$entreprises): ?><tr><td colspan="5">Aucune entreprise.</td></tr><?php endif; ?>
 </table>
 
-<footer class="footer">
-    <ul class="footer-liens">
-        <li><a href="index.php?page=plan_site">Plan du site</a></li>
-        <li><a href="index.php?page=mentions_legales">Mentions légales</a></li>
-        <li><a href="index.php?page=contact">Contact</a></li>
-    </ul>
-    <p class="footer-copy">© 2026 LPRS – Tous droits réservés</p>
-</footer>
-</body>
-</html>
+<?php require __DIR__ . '/_pied.php'; ?>

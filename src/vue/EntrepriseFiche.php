@@ -14,16 +14,10 @@ $estMembre = $repo->estMembre($e->id_entreprise, $_SESSION['user_id']);
 $peutRejoindre = in_array($_SESSION['user_role'], ['partenaire', 'alumni']);
 $membres = $repo->membres($e->id_entreprise);
 ?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title><?= h($e->nom) ?></title>
-</head>
-<body>
-<?php require __DIR__ . '/_menu.php'; ?>
-<h1><?= h($e->nom) ?></h1>
-
+<?php
+$titre = $e->nom;
+require __DIR__ . '/_entete.php';
+?>
 <p>Adresse : <?= h($e->adresse) ?> <?= h($e->code_postal) ?> <?= h($e->ville) ?></p>
 <p>Site web : <a href="https://<?= h($e->site_web) ?>" target="_blank" rel="noopener"><?= h($e->site_web) ?></a></p>
 <p>Secteur d'activité : <?= h($e->secteur_activite) ?></p>
@@ -53,5 +47,5 @@ $membres = $repo->membres($e->id_entreprise);
         <p><button type="submit">Me rattacher</button></p>
     </form>
 <?php endif; ?>
-</body>
-</html>
+
+<?php require __DIR__ . '/_pied.php'; ?>

@@ -7,15 +7,10 @@ $organises = $repo->organisesPar($_SESSION['user_id']);
 $inscriptions = $repo->inscritsPar($_SESSION['user_id']);
 $date = function ($d) { return $d ? date('d/m/Y H:i', strtotime($d)) : ''; };
 ?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Événements</title>
-</head>
-<body>
-<?php require __DIR__ . '/_menu.php'; ?>
-<h1>Événements</h1>
+<?php
+$titre = 'Événements';
+require __DIR__ . '/_entete.php';
+?>
 <p><a href="index.php?page=evenement_form">Proposer un événement</a> |
     <?php if ($passes): ?><a href="index.php?page=evenements">Événements à venir</a>
     <?php else: ?><a href="index.php?page=evenements&passes=1">Événements passés</a><?php endif; ?></p>
@@ -52,13 +47,4 @@ $date = function ($d) { return $d ? date('d/m/Y H:i', strtotime($d)) : ''; };
     <?php if (!$inscriptions): ?><li>Aucune.</li><?php endif; ?>
 </ul>
 
-<footer class="footer">
-    <ul class="footer-liens">
-        <li><a href="index.php?page=plan_site">Plan du site</a></li>
-        <li><a href="index.php?page=mentions_legales">Mentions légales</a></li>
-        <li><a href="index.php?page=contact">Contact</a></li>
-    </ul>
-    <p class="footer-copy">© 2026 LPRS – Tous droits réservés</p>
-</footer>
-</body>
-</html>
+<?php require __DIR__ . '/_pied.php'; ?>

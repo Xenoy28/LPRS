@@ -12,15 +12,10 @@ if ($id && (!$e || !$repo->estMembre($id, $_SESSION['user_id']))) {
     exit;
 }
 ?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title><?= $id ? 'Modifier' : 'Créer' ?> une entreprise</title>
-</head>
-<body>
-<?php require __DIR__ . '/_menu.php'; ?>
-<h1><?= $id ? 'Modifier la fiche entreprise' : 'Créer une fiche entreprise' ?></h1>
+<?php
+$titre = $id ? 'Modifier la fiche entreprise' : 'Créer une fiche entreprise';
+require __DIR__ . '/_entete.php';
+?>
 
 <form method="post" action="src/traitement/Entreprise.php">
     <input type="hidden" name="action" value="<?= $id ? 'modifier' : 'creer' ?>">
@@ -37,5 +32,5 @@ if ($id && (!$e || !$repo->estMembre($id, $_SESSION['user_id']))) {
     <?php endif; ?>
     <p><button type="submit">Enregistrer</button></p>
 </form>
-</body>
-</html>
+
+<?php require __DIR__ . '/_pied.php'; ?>

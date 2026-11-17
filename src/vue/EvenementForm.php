@@ -10,15 +10,10 @@ if ($id && (!$e || !$repo->estOrganisateur($id, $_SESSION['user_id']))) {
 // "2026-11-05 14:30:00" => "2026-11-05T14:30" (champ datetime-local)
 $champDate = function ($d) { return $d ? date('Y-m-d\TH:i', strtotime($d)) : ''; };
 ?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title><?= $id ? 'Modifier' : 'Proposer' ?> un événement</title>
-</head>
-<body>
-<?php require __DIR__ . '/_menu.php'; ?>
-<h1><?= $id ? 'Modifier l\'événement' : 'Proposer un événement' ?></h1>
+<?php
+$titre = $id ? 'Modifier l\'événement' : 'Proposer un événement';
+require __DIR__ . '/_entete.php';
+?>
 <?php if (!$id && $_SESSION['user_role'] === 'etudiant'): ?>
     <p>Un événement créé par un étudiant n'est publié que si un professeur fait partie des organisateurs : vous pourrez en ajouter un après la création.</p>
 <?php endif; ?>
@@ -36,5 +31,6 @@ $champDate = function ($d) { return $d ? date('Y-m-d\TH:i', strtotime($d)) : '';
     <p>Éléments requis (si nécessaire)<br><textarea name="elements_requis" rows="3" cols="60"><?= h($e->elements_requis) ?></textarea></p>
     <p><button type="submit">Enregistrer</button></p>
 </form>
-</body>
-</html>
+
+<?php require __DIR__ . '/_pied.php'; ?>
+

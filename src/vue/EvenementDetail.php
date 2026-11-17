@@ -15,15 +15,10 @@ $termine = strtotime($e->date_debut) < time();
 $complet = $e->nombre_places !== null && $e->places_prises >= $e->nombre_places;
 $date = function ($d) { return $d ? date('d/m/Y H:i', strtotime($d)) : ''; };
 ?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title><?= h($e->titre) ?></title>
-</head>
-<body>
-<?php require __DIR__ . '/_menu.php'; ?>
-<h1><?= h($e->titre) ?></h1>
+<?php
+$titre = $e->titre;
+require __DIR__ . '/_entete.php';
+?>
 
 <?php if (!$e->publie): ?>
     <p><strong>Non publié : un professeur doit faire partie des organisateurs pour que l'événement apparaisse sur le site.</strong></p>
@@ -112,5 +107,5 @@ $date = function ($d) { return $d ? date('d/m/Y H:i', strtotime($d)) : ''; };
 <?php endif; ?>
 
 <p><a href="index.php?page=evenements">← Retour aux événements</a></p>
-</body>
-</html>
+
+<?php require __DIR__ . '/_pied.php'; ?>
