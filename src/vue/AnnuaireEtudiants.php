@@ -44,5 +44,13 @@ $formations = (new FormationRepository())->liste();
     <?php endforeach; ?>
     <?php if (!$etudiants): ?><tr><td colspan="5">Aucun résultat.</td></tr><?php endif; ?>
 </table>
+<footer class="footer">
+    <ul class="footer-liens">
+        <li><a href="index.php?page=plan_site">Plan du site</a></li>
+        <li><a href="index.php?page=mentions_legales">Mentions légales</a></li>
+        <li><a href="index.php?page=contact">Contact</a></li>
+    </ul>
+    <p class="footer-copy">© 2026 LPRS – Tous droits réservés</p>
+</footer>
 </body>
 </html>
