@@ -14,15 +14,10 @@ $estAuteur = (int)$o->id_auteur === (int)$_SESSION['user_id'];
 $peutPostuler = in_array($_SESSION['user_role'], ['etudiant', 'alumni']);
 $dejaPostule = $peutPostuler && (new CandidatureRepository())->existe($o->id_offre, $_SESSION['user_id']);
 ?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title><?= h($o->titre) ?></title>
-</head>
-<body>
-<?php require __DIR__ . '/_menu.php'; ?>
-<h1><?= h($o->titre) ?></h1>
+<?php
+$titre = $o->titre;
+require __DIR__ . '/_entete.php';
+?>
 
 <p>
     <?= h($o->type_offre) ?> chez
@@ -75,5 +70,5 @@ $dejaPostule = $peutPostuler && (new CandidatureRepository())->existe($o->id_off
 <?php endif; ?>
 
 <p><a href="index.php?page=offres">← Retour aux offres</a></p>
-</body>
-</html>
+
+<?php require __DIR__ . '/_pied.php'; ?>

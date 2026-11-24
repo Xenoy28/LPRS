@@ -2,16 +2,11 @@
 require_once __DIR__ . '/../repository/UtilisateurRepository.php';
 $formations = (new UtilisateurRepository())->listeFormations();
 ?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Inscription</title>
-</head>
-<body>
-<h1>Inscription</h1>
+<?php
+$titre = 'Inscription';
+require __DIR__ . '/_entete.php';
+?>
 
-<p><?= htmlspecialchars($_GET['erreur'] ?? '') ?></p>
 
 <form method="post" action="src/traitement/Inscription.php">
     <p>Nom <input type="text" name="nom"></p>
@@ -78,5 +73,5 @@ $formations = (new UtilisateurRepository())->listeFormations();
     select.addEventListener('change', afficher);
     afficher();
 </script>
-</body>
-</html>
+
+<?php require __DIR__ . '/_pied.php'; ?>

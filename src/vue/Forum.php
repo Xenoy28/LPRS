@@ -74,71 +74,16 @@ if ($page === 'accueil') {
 } elseif ($page === 'sujet') {
     $reponses = $reponseRepo->listerParPost($id);
 }
-?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Forum - LPRS</title>
-    <style>
-        body { margin: 0; font-family: sans-serif; background: #f5f7f8; min-height: 100vh; display: flex; flex-direction: column; }
-        .topbar { display: grid; grid-template-columns: 1fr 2fr 1fr; height: 60px; background: #0f4c5c; color: #fff; }
-        .topbar > div { display: flex; align-items: center; padding: 0 20px; }
-        .centre { justify-content: center; gap: 20px; }
-        .droite { justify-content: flex-end; position: relative; }
-        .centre a { color: #fff; text-decoration: none; }
-        .burger { background: none; border: none; color: #fff; font-size: 30px; cursor: pointer; }
-        .menu { display: none; position: absolute; top: 60px; right: 0; background: #fff; list-style: none; margin: 0; padding: 0; min-width: 180px; box-shadow: 0 4px 12px rgba(0,0,0,.2); z-index: 10; }
-        .menu a { display: block; padding: 14px 20px; color: #222; text-decoration: none; }
-        .menu a:hover { background: #e6eef0; }
-
-        .contenu { flex: 1; max-width: 900px; width: 100%; margin: 0 auto; padding: 30px 20px; box-sizing: border-box; }
-        .carte, .message { background: #fff; padding: 16px 20px; margin-bottom: 14px; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
-        .carte { border-left: 4px solid #0f4c5c; }
-        .carte h3 { margin: 0 0 6px; }
-        .carte a { color: #0f4c5c; text-decoration: none; }
-        .carte a:hover { text-decoration: underline; }
-        .meta { color: #666; font-size: 13px; }
-        .message .meta { margin-bottom: 8px; }
-        .badge { background: #e6eef0; color: #0f4c5c; font-size: 12px; padding: 2px 8px; margin-left: 6px; }
-        input[type=text], textarea { width: 100%; padding: 10px; border: 1px solid #c9d3d6; box-sizing: border-box; font-family: inherit; font-size: 15px; margin-bottom: 10px; }
-        .btn { background: #0f4c5c; color: #fff; border: none; padding: 10px 20px; cursor: pointer; text-decoration: none; display: inline-block; }
-        .erreur { background: #fde8e8; color: #9b1c1c; padding: 10px; margin-bottom: 14px; }
-        .pagination a, .pagination strong { display: inline-block; padding: 6px 12px; margin-right: 6px; border: 1px solid #c9d3d6; background: #fff; color: #0f4c5c; text-decoration: none; }
-        .pagination strong { background: #0f4c5c; color: #fff; border-color: #0f4c5c; }
-
-        .footer { background: #fff; border-top: 3px solid #0f4c5c; padding: 20px 30px; }
-        .footer-liens { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; }
-        .footer-liens li { padding: 0 16px; border-left: 1px solid #c9d3d6; }
-        .footer-liens li:first-child { padding-left: 0; border-left: none; }
-        .footer-liens a { color: #161616; font-size: 14px; text-decoration: none; }
-        .footer-copy { margin: 14px 0 0; font-size: 12px; color: #666; }
-    </style>
-</head>
-<body>
-
-<div class="topbar">
-    <div>LPRS</div>
-    <div class="centre">
-        <a href="index.php">Accueil</a>
-        <a href="#">Services</a>
-        <a href="index.php?page=forum">Forum</a>
-    </div>
-    <div class="droite">
-        <button class="burger" onclick="toggleMenu()">☰</button>
-        <ul class="menu" id="menu">
-            <li><a href="index.php?page=profil">Profil</a></li>
-            <li><a href="src/traitement/Logout.php">Déconnexion</a></li>
-            <li><a href="#">Paramètres</a></li>
-        </ul>
-    </div>
-</div>
-
-<div class="contenu">
+    $titreOnglet = $page === 'sujet' ? $post->titre
+        : ($page === 'nouveau' ? 'Nouveau sujet'
+            : ($page === 'section' ? $canal->nom
+                : ($page === 'mes' ? 'Mes posts' : 'Forum')));
+    $sansFil = true;
+    require __DIR__ . '/_entete.php';
+    ?>
 
     <?php if ($page === 'accueil'): ?>
 
-        <h1>Forum</h1>
         <p><a class="btn" href="<?= e(lien_forum(['mes' => 1])) ?>">Mes posts</a></p>
 
         <?php if (!$canaux): ?><p>Aucune section disponible pour ton profil.</p><?php endif; ?>
@@ -156,10 +101,8 @@ if ($page === 'accueil') {
         <p><a href="<?= e(lien_forum()) ?>">← Retour au forum</a></p>
 
         <?php if ($page === 'mes'): ?>
-            <h1>Mes posts</h1>
             <p class="meta">Les sujets que tu as écrits et ceux dans lesquels tu as répondu.</p>
         <?php else: ?>
-            <h1><?= e($canal->nom) ?></h1>
             <?php if ($canal->peutCreer($role)): ?>
                 <p><a class="btn" href="<?= e(lien_forum(['c' => $c, 'nouveau' => 1])) ?>">Nouveau sujet</a></p>
             <?php else: ?>
@@ -199,7 +142,6 @@ if ($page === 'accueil') {
     <?php elseif ($page === 'nouveau'): ?>
 
         <p><a href="<?= e(lien_forum(['c' => $c])) ?>">← Retour à <?= e($canal->nom) ?></a></p>
-        <h1>Nouveau sujet</h1>
         <?php if ($erreur): ?><div class="erreur"><?= e($erreur) ?></div><?php endif; ?>
 
         <form method="post">
@@ -212,10 +154,9 @@ if ($page === 'accueil') {
     <?php elseif ($page === 'sujet'): ?>
 
         <p><a href="<?= e(lien_forum(['c' => $c])) ?>">← Retour à <?= e($canal->nom) ?></a></p>
-        <h1><?= e($post->titre) ?></h1>
 
         <?php foreach (array_merge([$post], $reponses) as $m): ?>
-            <div class="message">
+            <div class="publication">
                 <div class="meta">
                     <strong><?= e($m->auteur) ?></strong><?= $m->type_profil ? ' (' . e($m->type_profil) . ')' : '' ?>
                     – <?= format_date($m->date_publication) ?>
@@ -234,22 +175,4 @@ if ($page === 'accueil') {
 
     <?php endif; ?>
 
-</div>
-
-<footer class="footer">
-    <ul class="footer-liens">
-        <li><a href="index.php?page=plan_site">Plan du site</a></li>
-        <li><a href="index.php?page=mentions_legales">Mentions légales</a></li>
-        <li><a href="index.php?page=contact">Contact</a></li>
-    </ul>
-    <p class="footer-copy">© 2026 LPRS – Tous droits réservés</p>
-</footer>
-
-<script>
-    function toggleMenu() {
-        const menu = document.getElementById("menu");
-        menu.style.display = menu.style.display === "block" ? "none" : "block";
-    }
-</script>
-</body>
-</html>
+<?php require __DIR__ . '/_pied.php'; ?>

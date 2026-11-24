@@ -6,17 +6,10 @@ $type = $user->getTypeProfil();
 $d = $user->getDetails();
 $h = function ($v) { return htmlspecialchars((string)$v); };
 ?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Mon profil</title>
-</head>
-<body>
-<h1>Mon profil (<?= $h($type) ?>)</h1>
-
-<p><?= $h($_GET['succes'] ?? '') ?></p>
-<p><?= $h($_GET['erreur'] ?? '') ?></p>
+<?php
+$titre = 'Mon profil (' . $type . ')';
+require __DIR__ . '/_entete.php';
+?>
 
 <form method="post" action="src/traitement/Modifier.php">
     <p>Nom <input type="text" name="nom" value="<?= $h($user->getNomUtilisateur()) ?>"></p>
@@ -52,14 +45,5 @@ $h = function ($v) { return htmlspecialchars((string)$v); };
 </form>
 
 <p><a href="index.php">Accueil</a> | <a href="src/traitement/Logout.php">Déconnexion</a></p>
-</body>
 
-<footer class="footer">
-    <ul class="footer-liens">
-        <li><a href="index.php?page=plan_site">Plan du site</a></li>
-        <li><a href="index.php?page=mentions_legales">Mentions légales</a></li>
-        <li><a href="index.php?page=contact">Contact</a></li>
-    </ul>
-    <p class="footer-copy">© 2026 LPRS – Tous droits réservés</p>
-</footer>
-</html>
+<?php require __DIR__ . '/_pied.php'; ?>

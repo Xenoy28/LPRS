@@ -13,15 +13,10 @@ if ($id && (!$o || (int)$o->id_auteur !== (int)$_SESSION['user_id'])) {
 }
 $mesEntreprises = (new EntrepriseRepository())->mesEntreprises($_SESSION['user_id']);
 ?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title><?= $id ? 'Modifier' : 'Publier' ?> une offre</title>
-</head>
-<body>
-<?php require __DIR__ . '/_menu.php'; ?>
-<h1><?= $id ? 'Modifier l\'offre' : 'Publier une offre' ?></h1>
+<?php
+$titre = $id ? 'Modifier l\'offre' : 'Publier une offre';
+require __DIR__ . '/_entete.php';
+?>
 
 <?php if (!$mesEntreprises): ?>
     <p>Pour publier une offre, rattachez-vous d'abord à une entreprise (<a href="index.php?page=entreprises">voir les entreprises</a>).</p>
@@ -59,5 +54,5 @@ $mesEntreprises = (new EntrepriseRepository())->mesEntreprises($_SESSION['user_i
         <p><button type="submit">Enregistrer</button></p>
     </form>
 <?php endif; ?>
-</body>
-</html>
+
+<?php require __DIR__ . '/_pied.php'; ?>

@@ -34,16 +34,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Créer le premier gestionnaire - LPRS</title>
-    <style>
-        body { font-family: system-ui, sans-serif; background: #f5f7f8; display: flex; justify-content: center; padding: 40px 16px; }
-        form { background: #fff; padding: 24px; border-radius: 8px; width: 100%; max-width: 380px; box-shadow: 0 1px 4px rgba(0,0,0,.15); }
-        label { display: block; margin: 12px 0 4px; font-weight: 600; }
-        input { width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #b8c4c8; border-radius: 4px; }
-        button { margin-top: 18px; width: 100%; padding: 10px; background: #0f4c5c; color: #fff; border: 0; border-radius: 4px; cursor: pointer; }
-        .erreur { background: #fde0dd; color: #7f1d1d; padding: 10px; border-radius: 4px; }
-    </style>
+    <link rel="stylesheet" href="../../assets/css/style.css">
 </head>
-<body>
+<body class="page-centree">
 <form method="post">
     <h2>Créer le premier gestionnaire</h2>
     <?php if ($erreur): ?><div class="erreur"><?= e($erreur) ?></div><?php endif; ?>
