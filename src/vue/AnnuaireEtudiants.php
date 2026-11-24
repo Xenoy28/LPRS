@@ -40,7 +40,7 @@ require __DIR__ . '/_entete.php';
     <?php endforeach; ?>
     <?php if (!$etudiants): ?><tr><td colspan="5">Aucun résultat.</td></tr><?php endif; ?>
 </table>
-<<<<<<< HEAD
+
 <?php require __DIR__ . '/_pied.php'; ?>
 =======
 <footer class="footer">
