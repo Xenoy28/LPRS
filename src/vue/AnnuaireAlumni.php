@@ -35,7 +35,7 @@ require __DIR__ . '/_entete.php';
     <?php endforeach; ?>
     <?php if (!$alumni): ?><tr><td colspan="6">Aucun résultat.</td></tr><?php endif; ?>
 </table>
-<<<<<<< HEAD
+
 
 <?php require __DIR__ . '/_pied.php'; ?>
 =======
