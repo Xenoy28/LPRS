@@ -9,6 +9,5 @@ require __DIR__ . '/_entete.php';
     <p><button type="submit">Se connecter</button></p>
 </form>
 
-<p><a href="index.php?page=inscription">Créer un compte</a> | <a href="index.php">Accueil</a></p>
-
+<p><a href="index.php?page=inscription">Créer un compte</a> | <a href="index.php?page=mdp_oublie">Mot de passe oublié ?</a> | <a href="index.php">Accueil</a></p>
 <?php require __DIR__ . '/_pied.php'; ?>

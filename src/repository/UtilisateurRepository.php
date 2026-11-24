@@ -188,5 +188,30 @@ class UtilisateurRepository
         $r->execute($params);
         return $r->fetchAll(PDO::FETCH_ASSOC);
     }
-}
 
+    // ---------- Mot de passe oublié ----------
+    // crée un jeton valable 1 heure (seul son hash est stocké) et le retourne
+    public function creerJetonReinitialisation($id)
+    {
+        $jeton = bin2hex(random_bytes(32));
+        $this->bdd->prepare('REPLACE INTO reinitialisation_mdp (id_utilisateur, jeton_hash, expiration)
+                             VALUES (?, ?, DATE_ADD(NOW(), INTERVAL 1 HOUR))')
+            ->execute([$id, hash('sha256', $jeton)]);
+        return $jeton;
+    }
+
+    public function jetonValide($id, $jeton)
+    {
+        $r = $this->bdd->prepare('SELECT jeton_hash FROM reinitialisation_mdp WHERE id_utilisateur = ? AND expiration > NOW()');
+        $r->execute([$id]);
+        $hash = $r->fetchColumn();
+        return $hash && hash_equals($hash, hash('sha256', $jeton));
+    }
+
+    // enregistre le nouveau mot de passe (déjà hashé) et supprime le jeton : il ne sert qu'une fois
+    public function reinitialiserMotDePasse($id, $nouveauHash)
+    {
+        $this->bdd->prepare('UPDATE utilisateur SET mot_de_passe = ? WHERE id_utilisateur = ?')->execute([$nouveauHash, $id]);
+        $this->bdd->prepare('DELETE FROM reinitialisation_mdp WHERE id_utilisateur = ?')->execute([$id]);
+    }
+}
